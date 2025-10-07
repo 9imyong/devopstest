@@ -6,15 +6,15 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: devops-starter
+      app: devopstest
   template:
     metadata:
-    labels:
-      app: devops-starter
+      labels:
+        app: devopstest
   spec:
     containers:
     - name: api
-      image: ghcr.io/yourname/devops-starter:latest
+      image: ghcr.io/9imyong/devopstest:latest
       ports:
         - containerPort: 8000
       readinessProbe:

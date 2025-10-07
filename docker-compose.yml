@@ -1,8 +1,8 @@
-version: "3.9"
 services:
   api:
     build: .
-    image: devops-starter:local
+    image: devopstest:local
+    container_name: devopstest
     ports:
     - "8000:8000"
     environment:
