@@ -5,7 +5,7 @@ app = FastAPI(title="DevOps test API", version="1.0.0")
 
 @app.get("/")
 def root():
-    return {"message": "Hello, test!"}
+    return {"message": "Hello, good!"}
 
 
 @app.get("/healthz")
