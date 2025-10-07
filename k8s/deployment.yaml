@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-starter
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-starter
+  template:
+    metadata:
+    labels:
+      app: devops-starter
+  spec:
+    containers:
+    - name: api
+      image: ghcr.io/yourname/devops-starter:latest
+      ports:
+        - containerPort: 8000
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 8000
+        initialDelaySeconds: 3
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8000
+        initialDelaySeconds: 10
+        periodSeconds: 10
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "300m"
+          memory: "256Mi"
