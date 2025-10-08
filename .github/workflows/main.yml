@@ -27,9 +27,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies and run tests (unit)
+      - name: Install dependencies and run tests
         run: |
           pip install -r app/requirements.txt pytest
+          export PYTHONPATH=$GITHUB_WORKSPACE
           pytest -q
 
       - name: Log in to GHCR
