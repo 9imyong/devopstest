@@ -1,9 +1,8 @@
-from fastapi.testclient import TestClient
-from app.main import app
+import os, requests
 
-client = TestClient(app)
+BASE = os.getenv("API_BASE", "http://localhost:8000")
 
-def test_health_unit():
-    r = client.get("/healthz")
+def test_health_e2e():
+    r = requests.get(f"{BASE}/healthz", timeout=3)
     assert r.status_code == 200
     assert r.json().get("status") == "ok"
