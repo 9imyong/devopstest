@@ -17,7 +17,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      id-token: write
 
     steps:
       - name: Checkout
@@ -28,7 +27,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies and run tests (unit)
         run: |
           pip install -r app/requirements.txt pytest
           pytest -q
@@ -50,8 +49,6 @@ jobs:
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
-        with:
-          version: 'latest'
 
       - name: Deploy to Kubernetes
         env:
@@ -59,5 +56,13 @@ jobs:
         run: |
           mkdir -p $HOME/.kube
           echo "$KUBE_CONFIG_DATA" | base64 -d > $HOME/.kube/config
+          kubectl create namespace devops --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f k8s/ -n devops
           kubectl rollout status deployment/devopstest -n devops
+
+      # 선택: 배포 후 스모크 테스트
+      # - name: Port-forward & smoke test
+      #   run: |
+      #     kubectl -n devops port-forward svc/devopstest 8080:80 > pf.log 2>&1 &
+      #     sleep 5
+      #     curl -f http://localhost:8080/healthz
