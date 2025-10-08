@@ -1,11 +1,9 @@
-import requests
+from fastapi.testclient import TestClient
+from app.main import app
 
+client = TestClient(app)
 
-# Simple smoke test when container is running locally
-# Run: `docker compose up -d` before executing this test
-
-
-def test_health_local():
-    r = requests.get('http://localhost:8000/healthz', timeout=2)
+def test_health_unit():
+    r = client.get("/healthz")
     assert r.status_code == 200
-    assert r.json().get('status') == 'ok'
+    assert r.json().get("status") == "ok"
