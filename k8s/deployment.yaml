@@ -1,7 +1,8 @@
+# k8s/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devops-starter
+  name: devopstest
 spec:
   replicas: 2
   selector:
@@ -11,28 +12,31 @@ spec:
     metadata:
       labels:
         app: devopstest
-  spec:
-    containers:
-    - name: api
-      image: ghcr.io/9imyong/devopstest:latest
-      ports:
-        - containerPort: 8000
-      readinessProbe:
-        httpGet:
-          path: /healthz
-          port: 8000
-        initialDelaySeconds: 3
-        periodSeconds: 5
-      livenessProbe:
-        httpGet:
-          path: /healthz
-          port: 8000
-        initialDelaySeconds: 10
-        periodSeconds: 10
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "128Mi"
-        limits:
-          cpu: "300m"
-          memory: "256Mi"
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/9imyong/devopstest:test   # 당신의 태그로 맞추기
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+      # 프라이빗 이미지면 주석 해제
+      # imagePullSecrets:
+      #   - name: ghcr-creds
