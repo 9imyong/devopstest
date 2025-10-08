@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: ghcr.io/9imyong/devopstest:test   # 당신의 태그로 맞추기
+          image: ghcr.io/9imyong/devopstest:latest   # 당신의 태그로 맞추기
           ports:
             - containerPort: 8000
           readinessProbe:
