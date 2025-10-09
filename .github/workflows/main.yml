@@ -61,7 +61,6 @@ jobs:
           kubectl create namespace devops --dry-run=client -o yaml | kubectl apply -f -
           kubectl apply -f k8s/ -n devops
           kubectl rollout status deployment/devopstest -n devops
-
       # 선택: 배포 후 스모크 테스트
       # - name: Port-forward & smoke test
       #   run: |
